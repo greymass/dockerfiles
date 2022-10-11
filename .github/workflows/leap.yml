@@ -1,0 +1,54 @@
+name: Antelope Leap Docker Image Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version (tag to build, e.g. v3.1.2)'
+        required: true
+        default: 'v3.1.2'
+      repo:
+        description: 'Git repository to pull from'
+        required: true
+        default: 'https://github.com/AntelopeIO/leap.git'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: greymass/leap
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=semver,pattern={{version}},value=${{ github.event.inputs.version }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ github.event.inputs.version }}
+            type=semver,pattern={{major}},value=${{ github.event.inputs.version }}
+
+      - name: Log in to the Container registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./leap/
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            LEAP_VERSION=${{ github.event.inputs.version }}
+            LEAP_REPOSITORY=${{ github.event.inputs.repo }}
