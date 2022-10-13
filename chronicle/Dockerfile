@@ -23,8 +23,9 @@ FROM ubuntu:22.04
 
 # copy chronicle install
 COPY --from=build-stage /chronicle /chronicle
+RUN ln -s /chronicle/chronicle-receiver /usr/local/bin/chronicle-receiver
 
 # setup runtime env
 ARG CHRONICLE_VERSION=v2.2
 ENV CHRONICLE_VERSION=$CHRONICLE_VERSION
-ENV PATH="/chronicle/bin:${PATH}"
+ENV PATH="/usr/local/bin:${PATH}"
