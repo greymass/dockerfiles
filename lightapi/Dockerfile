@@ -14,6 +14,7 @@ RUN apt-get update \
         cpanminus \
         gcc \
         g++ \
+        mysql-client \
         libmysqlclient-dev \
         libdbi-perl \
         libjson-xs-perl \
