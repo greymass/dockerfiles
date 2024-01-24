@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version (tag to build, e.g. v3.1.2)'
+        description: "Version (tag to build, e.g. v3.1.2)"
         required: true
-        default: 'v3.1.2'
+        default: "v5.0.0"
       repo:
-        description: 'Git repository to pull from'
+        description: "Git repository to pull from"
         required: true
-        default: 'https://github.com/AntelopeIO/leap.git'
+        default: "https://github.com/AntelopeIO/leap.git"
 
 env:
   REGISTRY: ghcr.io
@@ -20,7 +20,6 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout
         uses: actions/checkout@v2
 

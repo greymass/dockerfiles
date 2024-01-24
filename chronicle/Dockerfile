@@ -8,7 +8,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # setup build time variables
-ARG CHRONICLE_VERSION=v2.2
+ARG CHRONICLE_VERSION=v3.3
 ARG CHRONICLE_REPOSITORY=https://github.com/EOSChronicleProject/eos-chronicle.git
 
 # build and install chronicle
