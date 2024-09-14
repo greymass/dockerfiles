@@ -1,4 +1,4 @@
-FROM ubuntu:24.04 as build-stage
+FROM ubuntu:22.04 as build-stage
 
 # install build deps
 RUN apt-get update \
