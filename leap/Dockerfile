@@ -8,7 +8,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # setup build time variables
-ARG LEAP_VERSION=v5.0.0
+ARG LEAP_VERSION=v5.0.2
 ARG LEAP_REPOSITORY=https://github.com/AntelopeIO/leap.git
 
 # build and install leap
@@ -45,6 +45,6 @@ RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y --no-i
 COPY --from=build-stage /tmp/build /leap
 
 # setup runtime env
-ARG LEAP_VERSION=v5.0.0
+ARG LEAP_VERSION=v5.0.2
 ENV LEAP_VERSION=$LEAP_VERSION
 ENV PATH="/leap/bin:${PATH}"
