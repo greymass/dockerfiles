@@ -45,6 +45,6 @@ RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y --no-i
 COPY --from=build-stage /tmp/build /spring
 
 # setup runtime env
-ARG SPRING_VERSION=v5.0.0
+ARG SPRING_VERSION=v1.0.1
 ENV SPRING_VERSION=$SPRING_VERSION
 ENV PATH="/spring/bin:${PATH}"
